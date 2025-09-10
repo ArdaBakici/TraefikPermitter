@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<p style="color: white;">You are allowed.</p>
+<p style="color: white;">Remaining Time:</p>
+
+<div id="countdown" style="color: white; font-size: 32;">Loading...</div> <!-- Initial countdown value -->
+<script>
+    // Get the target countdown time from the server
+    const countdownTarget = {{ countdown }};
+    
+    // Update the countdown every second
+    const countdownElement = document.getElementById('countdown');
+    const countdownInterval = setInterval(() => {
+        const currentTime = Math.floor(Date.now() / 1000); // Current Unix timestamp
+        const remainingTime = countdownTarget - currentTime;
+
+        if (remainingTime <= 0) {
+            clearInterval(countdownInterval);
+            countdownElement.innerHTML = "Time's up!";
+        } else {
+            const hours = Math.floor(remainingTime / 3600);
+            const minutes = Math.floor((remainingTime % 3600) / 60);
+            const seconds = remainingTime % 60;
+
+            countdownElement.innerHTML = `${hours}h ${minutes}m ${seconds}s`;
+        }
+    }, 1000);
+</script>
+
+<a href="{{ url_for('permit') }}" style="color: red;"}> Click here to renew your permit.</a>
+{% endblock %}

@@ -1,0 +1,20 @@
+tcp:
+  middlewares:
+    mc-ipallowlist:
+      ipAllowList:
+        sourceRange:
+        - 10.10.10.10/32
+        - 127.0.0.1/32
+  routers:
+    mc-java:
+      entryPoints:
+      - mc-java
+      middlewares:
+      - mc-ipallowlist
+      rule: HostSNI(`*`)
+      service: mc-java
+  services:
+    mc-java:
+      loadBalancer:
+        servers:
+        - address: 10.10.10.1:25565

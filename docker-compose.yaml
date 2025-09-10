@@ -1,0 +1,26 @@
+networks:
+  proxy:
+    external: true
+
+services:
+  permitter:
+    build: .
+    container_name: permitter
+    networks:
+      - proxy
+    volumes:
+      - ./lists:/app/lists
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.permitter-https.rule=Host(`permit.ardabakici.com`)
+      - traefik.http.routers.permitter-https.entrypoints=https
+      - traefik.http.routers.permitter-https.middlewares=authelia
+      - traefik.http.routers.permitter-https.tls=true
+      - traefik.http.routers.permitter-https.service=permitter-svc
+      - traefik.http.services.permitter-svc.loadbalancer.server.port=5000
+
+      - traefik.http.middlewares.authelia.forwardauth.address=http://authelia:9091/api/verify?rd=https://auth.ardabakici.com/
+      - traefik.http.middlewares.authelia.forwardauth.trustforwardheader=true
+      - traefik.http.middlewares.authelia.forwardauth.authresponseheaders=Remote-User, Remote-Groups
+
+

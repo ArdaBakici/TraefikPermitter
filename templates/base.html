@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<style type="text/css">
+		body{
+			font-family: 'Roboto', sans-serif;
+			background-color: #373737;
+		}
+		a{
+			text-decoration: none;
+		}
+		#main_div{
+			overflow-x: hidden;
+		}
+		.navbar-brand{
+			padding: 0;
+		}
+	</style>
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet"> 
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Permitter</title>
+</head>
+<body>
+	<div id="main_div">
+		{% block content%}{% endblock %}
+	</div>
+</body>
+</html>
